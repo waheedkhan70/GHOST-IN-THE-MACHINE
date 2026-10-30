@@ -1,0 +1,353 @@
+/* ==========================================================================
+   NECROSHELL - THE HAUNTED CRT TERMINAL STYLES
+   ========================================================================== */
+
+.terminal-workspace {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+}
+
+/* CRT Monitor Frame */
+.crt-monitor-frame {
+  position: relative;
+  background: #05070a;
+  border-radius: var(--radius-lg);
+  border: 2px solid rgba(0, 245, 212, 0.3);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 245, 212, 0.15), inset 0 0 60px rgba(0, 0, 0, 0.95);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+  max-height: 720px;
+  transition: all var(--transition-smooth);
+}
+
+.crt-monitor-frame.possessed {
+  animation: crt-jitter 0.15s infinite;
+  border-color: rgba(255, 56, 96, 0.7);
+  box-shadow: 0 0 50px rgba(255, 56, 96, 0.35), inset 0 0 80px rgba(255, 0, 0, 0.2);
+}
+
+/* CRT Header */
+.crt-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: rgba(13, 17, 26, 0.9);
+  border-bottom: 1px solid rgba(0, 245, 212, 0.2);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--spectral-cyan);
+  user-select: none;
+}
+
+.crt-window-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.crt-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: inline-block;
+}
+
+.crt-dot.red { background: #ff5f56; box-shadow: 0 0 6px rgba(255, 95, 86, 0.6); }
+.crt-dot.yellow { background: #ffbd2e; box-shadow: 0 0 6px rgba(255, 189, 46, 0.6); }
+.crt-dot.green { background: #27c93f; box-shadow: 0 0 6px rgba(39, 201, 63, 0.6); }
+
+.crt-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.crt-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+}
+
+.status-badge {
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(57, 255, 20, 0.1);
+  color: var(--phosphor-green);
+  border: 1px solid rgba(57, 255, 20, 0.3);
+}
+
+.status-badge.possessed {
+  background: rgba(255, 56, 96, 0.15);
+  color: var(--blood-red);
+  border-color: var(--blood-red);
+  animation: blink 0.8s infinite;
+}
+
+/* CRT Screen Area with Scanlines */
+.crt-screen {
+  flex: 1;
+  padding: 20px 24px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--phosphor-green);
+  position: relative;
+  background: radial-gradient(circle at center, #07100b 0%, #030604 100%);
+  text-shadow: 0 0 6px rgba(57, 255, 20, 0.55);
+}
+
+/* CRT Scanlines and curvature effects */
+.crt-screen::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
+  z-index: 5;
+  background-size: 100% 3px, 4px 100%;
+  pointer-events: none;
+}
+
+.crt-screen::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: radial-gradient(circle at center, transparent 65%, rgba(0, 0, 0, 0.75) 100%);
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* Terminal Content Blocks */
+.term-line {
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+.term-banner {
+  color: var(--spectral-cyan);
+  text-shadow: 0 0 10px var(--spectral-cyan-glow);
+  font-size: 0.78rem;
+  line-height: 1.25;
+  white-space: pre;
+  margin-bottom: 14px;
+}
+
+.term-prompt-line {
+  color: var(--cempasuchil);
+  text-shadow: 0 0 8px var(--cempasuchil-glow);
+  font-weight: 600;
+}
+
+.term-cmd {
+  color: #fff;
+}
+
+.term-ghost-response {
+  margin: 10px 0 14px;
+  padding: 12px 16px;
+  background: rgba(0, 245, 212, 0.05);
+  border-left: 3px solid var(--spectral-cyan);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: #d8f3dc;
+  animation: ghost-flicker 2s infinite;
+}
+
+.term-ghost-response.possessed {
+  border-left-color: var(--blood-red);
+  background: rgba(255, 56, 96, 0.08);
+  color: #ffccd5;
+}
+
+.term-whisper {
+  font-style: italic;
+  color: var(--spirit-violet);
+  text-shadow: 0 0 10px var(--spirit-glow);
+  opacity: 0.9;
+  margin: 6px 0;
+  font-size: 0.85rem;
+}
+
+.term-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 0.82rem;
+}
+
+.term-table th {
+  color: var(--marigold-gold);
+  text-align: left;
+  border-bottom: 1px dashed rgba(255, 190, 11, 0.3);
+  padding: 4px 10px 4px 0;
+}
+
+.term-table td {
+  padding: 4px 10px 4px 0;
+  color: #cbd5e1;
+}
+
+/* Interactive Input Line */
+.term-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 10;
+  margin-top: 10px;
+}
+
+.term-prompt-symbol {
+  color: var(--spectral-cyan);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.term-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  caret-color: var(--phosphor-green);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Terminal Side Controller */
+.terminal-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.side-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-elevation);
+}
+
+.side-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 8px;
+}
+
+.side-title svg {
+  width: 16px;
+  height: 16px;
+  color: var(--cempasuchil);
+}
+
+/* Command Chips */
+.command-chips-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cmd-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.cmd-chip:hover {
+  background: rgba(0, 245, 212, 0.15);
+  border-color: var(--spectral-cyan);
+  color: #fff;
+  box-shadow: 0 0 10px var(--spectral-cyan-glow);
+  transform: translateY(-1px);
+}
+
+/* Telemetry & Paranormal Gauges */
+.gauge-item {
+  margin-bottom: 12px;
+}
+
+.gauge-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+}
+
+.gauge-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.gauge-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+.gauge-fill.cyan {
+  background: linear-gradient(90deg, #0be881, var(--spectral-cyan));
+  box-shadow: 0 0 8px var(--spectral-cyan);
+}
+
+.gauge-fill.amber {
+  background: linear-gradient(90deg, #ff9e00, #ff5400);
+  box-shadow: 0 0 8px var(--cempasuchil);
+}
+
+.gauge-fill.violet {
+  background: linear-gradient(90deg, #7b2cbf, #b388ff);
+  box-shadow: 0 0 8px var(--spirit-violet);
+}
+
+/* Glitch Animations */
+@keyframes crt-jitter {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-1.5px, 1.5px); }
+  40% { transform: translate(-1.5px, -1.5px); }
+  60% { transform: translate(1.5px, 1.5px); }
+  80% { transform: translate(1.5px, -1.5px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes ghost-flicker {
+  0%, 100% { opacity: 1; }
+  52% { opacity: 0.88; }
+  54% { opacity: 0.98; }
+  85% { opacity: 0.92; }
+}
+
+@media (max-width: 900px) {
+  .terminal-workspace {
+    grid-template-columns: 1fr;
+  }
+}

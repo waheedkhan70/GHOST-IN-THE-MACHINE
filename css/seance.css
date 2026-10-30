@@ -1,0 +1,276 @@
+/* ==========================================================================
+   OFFLINE SÉANCE & GHOST STORY WEAVER STYLES
+   ========================================================================== */
+
+/* Séance Chamber Layout */
+.seance-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+}
+
+/* Spirit Selector Sidebar */
+.spirit-roster {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.spirit-select-card {
+  background: var(--bg-glass-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.spirit-select-card:hover {
+  background: var(--bg-glass-hover);
+  border-color: rgba(0, 245, 212, 0.4);
+  transform: translateX(4px);
+}
+
+.spirit-select-card.active {
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.2), rgba(0, 245, 212, 0.1));
+  border-color: var(--spirit-violet);
+  box-shadow: 0 0 20px var(--spirit-glow);
+}
+
+.spirit-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--spectral-cyan);
+  flex-shrink: 0;
+  box-shadow: 0 0 12px var(--spectral-cyan-glow);
+}
+
+.spirit-select-card.active .spirit-avatar {
+  border-color: var(--spirit-violet);
+  box-shadow: 0 0 15px var(--spirit-glow);
+}
+
+.spirit-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.spirit-name {
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.spirit-era {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--marigold-gold);
+}
+
+.spirit-domain {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+/* Chat & Commune Dialogue Window */
+.seance-dialogue-box {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  height: 640px;
+  box-shadow: var(--shadow-elevation);
+  overflow: hidden;
+}
+
+.seance-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: rgba(10, 12, 18, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.current-spirit-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.spirit-status-pulse {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--spirit-violet);
+}
+
+.spirit-pulse-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--spirit-violet);
+  box-shadow: 0 0 10px var(--spirit-violet);
+  animation: pulse-ring 2s infinite;
+}
+
+/* Message Feed */
+.seance-messages-stream {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.chat-bubble {
+  max-width: 80%;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  position: relative;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.chat-bubble.spirit {
+  align-self: flex-start;
+  background: rgba(22, 28, 48, 0.85);
+  border: 1px solid rgba(157, 78, 221, 0.4);
+  color: #f1f5f9;
+  border-bottom-left-radius: 2px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4), 0 0 15px rgba(157, 78, 221, 0.15);
+}
+
+.chat-bubble.spirit::before {
+  content: attr(data-author);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--marigold-gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.25), rgba(255, 84, 0, 0.2));
+  border: 1px solid rgba(255, 140, 0, 0.4);
+  color: #fff;
+  border-bottom-right-radius: 2px;
+}
+
+/* Chat Input Bar */
+.seance-input-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(10, 12, 18, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.seance-text-field {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  padding: 12px 16px;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.seance-text-field:focus {
+  border-color: var(--spirit-violet);
+  box-shadow: 0 0 15px var(--spirit-glow);
+}
+
+/* ==========================================================================
+   GHOST STORY WEAVER & SENSOR ANOMALY DETECTOR
+   ========================================================================== */
+
+.story-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.sensor-panel, .story-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--shadow-elevation);
+}
+
+.sensor-log-box {
+  background: #06080d;
+  border: 1px solid rgba(0, 245, 212, 0.2);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--spectral-cyan);
+  height: 240px;
+  overflow-y: auto;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.story-output-box {
+  background: radial-gradient(circle at center, rgba(30, 20, 45, 0.6) 0%, rgba(10, 10, 18, 0.95) 100%);
+  border: 1px solid rgba(157, 78, 221, 0.35);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: #f1f5f9;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}
+
+.story-output-box h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--marigold-gold);
+  margin-bottom: 14px;
+  text-shadow: 0 0 10px rgba(255, 190, 11, 0.3);
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(157, 78, 221, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(157, 78, 221, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(157, 78, 221, 0); }
+}
+
+@media (max-width: 900px) {
+  .seance-layout, .story-workspace {
+    grid-template-columns: 1fr;
+  }
+}

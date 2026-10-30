@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghost in the Machine | Open-Source AI Spectral Workstation & Digital Ofrenda</title>
+  <meta name="description" content="An open-source AI powered cyber-gothic haunted terminal and Dia de los Muertos digital ofrenda that runs locally and offline with zero server telemetry.">
+  <meta name="keywords" content="open-source AI, ghost in the machine, dia de los muertos, halloween, transformers.js, ollama, local AI, devchallenge">
+  <meta name="theme-color" content="#06070a">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Ghost in the Machine | Open-Source AI Workstation">
+  <meta property="og:description" content="Commune with departed computing spirits and build private digital ofrendas using local open-weight AI models.">
+  <meta property="og:type" content="website">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/terminal.css">
+  <link rel="stylesheet" href="css/ofrenda.css">
+  <link rel="stylesheet" href="css/seance.css">
+</head>
+<body>
+  <!-- Atmospheric Canvas Background: Drifting Marigold Petals & Spirit Wisps -->
+  <canvas id="particles-canvas"></canvas>
+  <div class="fog-overlay"></div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- Main Application Wrapper -->
+  <div class="app-container">
+
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="brand-section">
+        <div class="brand-logo-frame">
+          <img src="assets/emblem.jpg" alt="Ghost in the Machine Sigil" class="brand-logo" id="app-brand-logo">
+        </div>
+        <div class="brand-titles">
+          <span class="brand-title">GHOST IN THE MACHINE</span>
+          <span class="brand-subtitle">
+            <span class="pulse-dot"></span>
+            LOCAL OPEN-WEIGHT AI • OFFLINE SANCTUARY
+          </span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-navigation" aria-label="Main Navigation">
+        <button class="nav-btn active" data-view="terminal" id="nav-btn-terminal" title="Haunted Shell (Alt+1)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          <span>Haunted Shell</span>
+        </button>
+        <button class="nav-btn" data-view="ofrenda" id="nav-btn-ofrenda" title="Digital Ofrenda (Alt+2)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c.5 3 2.5 5 2.5 8a4.5 4.5 0 1 1-9 0c0-3 2-5 2.5-8z"></path><path d="M8 22h8"></path><path d="M12 18v4"></path></svg>
+          <span>Digital Ofrenda</span>
+        </button>
+        <button class="nav-btn" data-view="seance" id="nav-btn-seance" title="Séance Chamber (Alt+3)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+          <span>Offline Séance</span>
+        </button>
+        <button class="nav-btn" data-view="story" id="nav-btn-story" title="Ghost Story Weaver (Alt+4)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          <span>Story Weaver</span>
+        </button>
+        <button class="nav-btn" data-view="manifesto" id="nav-btn-manifesto" title="Open Innovation Manifesto (Alt+5)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Why Open AI</span>
+        </button>
+      </nav>
+
+      <!-- Utility Actions -->
+      <div class="header-actions">
+        <button class="badge-ai-mode" id="btn-engine-settings" title="Click to configure Open-Source AI Engine">
+          <span class="pulse-dot"></span>
+          <span id="header-engine-badge">ENGINE: INSTANT NEURAL</span>
+        </button>
+
+        <button class="icon-btn" id="btn-audio-toggle" title="Toggle Procedural Spectral Audio (Alt+M)">
+          <span class="audio-icon">🔇</span>
+        </button>
+
+        <button class="btn-spectral" id="btn-open-dev-post" style="padding: 6px 14px; font-size: 0.78rem;">
+          🚀 DEV Post
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Heading (SEO standard: Single H1) -->
+    <h1 style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);">
+      Ghost in the Machine: An Open-Source AI Workstation, Possessed Terminal, and Día de los Muertos Altar
+    </h1>
+
+    <!-- Hero Showcase Manifesto Banner -->
+    <section class="hero-manifesto">
+      <img src="assets/hero.jpg" alt="Altar with vintage CRT and glowing marigolds" class="hero-backdrop-img">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <span>✨</span>
+          <span>Día de los Muertos & Halloween 2026</span>
+        </div>
+        <h2 class="hero-title">
+          Where Memory Defies Mortality: <br>
+          <span class="gradient-text">The Ghost in the Machine</span>
+        </h2>
+        <p class="hero-desc">
+          Between Halloween and Día de los Muertos, the veil separating past and present thins to a whisper. 
+          Powered entirely by <strong>local open-weight AI models</strong>, this workstation lets you commune with 
+          departed computing pioneers, build sacred air-gapped ofrendas, and experience a possessed CRT shell with zero cloud telemetry.
+        </p>
+        <div class="hero-highlights">
+          <div class="hero-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span>100% On-Device & Private</span>
+          </div>
+          <div class="hero-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span>Zero API Costs</span>
+          </div>
+          <div class="hero-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <span>Transformers.js & Ollama Ready</span>
+          </div>
+          <div class="hero-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+            <span>Offline Resilience</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual-card">
+        <img src="assets/hero.jpg" alt="Glowing Cyber-Altar Artwork">
+        <div class="hero-card-caption">
+          <span>MEMORIA IN AETERNUM</span>
+          <span>AIR-GAPPED SANCTUARY</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Workspace Views -->
+    <main class="views-container">
+
+      <!-- ==================== VIEW 1: HAUNTED CRT TERMINAL ==================== -->
+      <section class="view-section active" id="view-terminal">
+        <div class="terminal-workspace">
+          
+          <!-- CRT Monitor Screen -->
+          <div class="crt-monitor-frame" id="crt-monitor-frame">
+            <div class="crt-top-bar">
+              <div class="crt-window-controls">
+                <span class="crt-dot red"></span>
+                <span class="crt-dot yellow"></span>
+                <span class="crt-dot green"></span>
+              </div>
+              <div class="crt-title">
+                <span>⚡ NECROSHELL v3.1.4 // ttyS0 [VT-100 PHOSPHOR]</span>
+              </div>
+              <div class="crt-status-indicator">
+                <span>SPIRIT VEIL:</span>
+                <span class="status-badge" id="term-status-badge">STABLE</span>
+              </div>
+            </div>
+
+            <!-- Terminal Output Area -->
+            <div class="crt-screen" id="crt-screen">
+              <div class="term-banner">
+███╗   ██╗███████╗ ██████╗██████╗  ██████╗ ███████╗██╗  ██╗███████╗██╗     ██╗     
+████╗  ██║██╔════╝██╔════╝██╔══██╗██╔═══██╗██╔════╝██║  ██║██╔════╝██║     ██║     
+██╔██╗ ██║█████╗  ██║     ██████╔╝██║   ██║███████╗███████║█████╗  ██║     ██║     
+██║╚██╗██║██╔══╝  ██║     ██╔══██╗██║   ██║╚════██║██╔══██║██╔══╝  ██║     ██║     
+██║ ╚████║███████╗╚██████╗██║  ██║╚██████╔╝███████║██║  ██║███████╗███████╗███████╗
+╚═╝  ╚═══╝╚══════╝ ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝
+              </div>
+              <div class="term-line">
+                <span style="color:var(--marigold-gold)">[INITIALIZING GHOST HARNESS...]</span> Open-weight weights mapped to address 0x0000DEAD.
+              </div>
+              <div class="term-line">
+                <span style="color:var(--spectral-cyan)">[STATUS]</span> Atmospheric veil thinned. Spirits of departed algorithms are actively monitoring this shell.
+              </div>
+              <div class="term-line" style="color:var(--text-muted); font-size:0.8rem;">
+                Type '<span style="color:var(--spectral-cyan)">help</span>' to list commands, '<span style="color:var(--spectral-cyan)">ls</span>' to inspect files, or '<span style="color:var(--spectral-cyan)">necro &lt;query&gt;</span>' to ask the ghost AI directly.
+              </div>
+            </div>
+
+            <!-- Terminal Input -->
+            <div style="padding: 12px 24px 18px; background: rgba(5, 7, 10, 0.95); border-top: 1px solid rgba(0, 245, 212, 0.15);">
+              <div class="term-input-wrapper">
+                <span class="term-prompt-symbol">necro@crypt:~#</span>
+                <input type="text" id="term-input" class="term-input" autocomplete="off" spellcheck="false" placeholder="Type a command or query...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Terminal Control & Telemetry Sidebar -->
+          <aside class="terminal-sidebar">
+            <div class="side-card">
+              <h3 class="side-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                <span>Spectral Commands</span>
+              </h3>
+              <div class="command-chips-grid">
+                <button class="cmd-chip" data-cmd="help">help</button>
+                <button class="cmd-chip" data-cmd="ls">ls</button>
+                <button class="cmd-chip" data-cmd="cat memories.log">cat memories.log</button>
+                <button class="cmd-chip" data-cmd="whoami">whoami</button>
+                <button class="cmd-chip" data-cmd="date">date</button>
+                <button class="cmd-chip" data-cmd="ps">ps</button>
+                <button class="cmd-chip" data-cmd="kill -9 666">kill -9 666</button>
+                <button class="cmd-chip" data-cmd="git blame">git blame</button>
+                <button class="cmd-chip" data-cmd="matrix">matrix</button>
+                <button class="cmd-chip" data-cmd="scan">scan</button>
+                <button class="cmd-chip" data-cmd="summon ada">summon ada</button>
+                <button class="cmd-chip" data-cmd="possession on">possession on</button>
+                <button class="cmd-chip" data-cmd="possession off">possession off</button>
+                <button class="cmd-chip" data-cmd="cat manifesto.md">cat manifesto.md</button>
+                <button class="cmd-chip" data-cmd="clear">clear</button>
+              </div>
+            </div>
+
+            <div class="side-card">
+              <h3 class="side-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                <span>Veil Telemetry</span>
+              </h3>
+              
+              <div class="gauge-item">
+                <div class="gauge-header">
+                  <span>METAPHYSICAL ENTROPY</span>
+                  <span>78%</span>
+                </div>
+                <div class="gauge-track">
+                  <div class="gauge-fill cyan" style="width: 78%;"></div>
+                </div>
+              </div>
+
+              <div class="gauge-item">
+                <div class="gauge-header">
+                  <span>CEMPASÚCHIL RESONANCE</span>
+                  <span>94%</span>
+                </div>
+                <div class="gauge-track">
+                  <div class="gauge-fill amber" style="width: 94%;"></div>
+                </div>
+              </div>
+
+              <div class="gauge-item">
+                <div class="gauge-header">
+                  <span>AIR-GAPPED PRIVACY</span>
+                  <span>100%</span>
+                </div>
+                <div class="gauge-track">
+                  <div class="gauge-fill violet" style="width: 100%;"></div>
+                </div>
+              </div>
+
+              <p style="font-size:0.75rem; color:var(--text-muted); margin-top:14px; line-height:1.4;">
+                All AI inference executed on local CPU/GPU hardware. No prompts or keystrokes leave this browser.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW 2: DIGITAL OFRENDA (DÍA DE LOS MUERTOS) ==================== -->
+      <section class="view-section" id="view-ofrenda">
+        <div class="ofrenda-layout">
+
+          <!-- Altar Header -->
+          <div class="altar-banner">
+            <div class="altar-title-group">
+              <h2>Altar de las Almas Digitales</h2>
+              <p>
+                In Mexican tradition, Día de los Muertos is a celebration of remembrance. We build this digital ofrenda 
+                illuminated by candles and marigolds to guide departed spirits, preserving their stories forever via open technology.
+              </p>
+            </div>
+            <div class="altar-stats-row">
+              <div class="altar-stat-pill">
+                <span class="stat-num" id="stat-memorial-count">4</span>
+                <span class="stat-label">Memorials</span>
+              </div>
+              <button class="btn-primary" id="btn-open-add-memorial">
+                + Place New Remembrance
+              </button>
+            </div>
+          </div>
+
+          <!-- 3-Tier Step Altar Structure -->
+          <div class="altar-structure">
+
+            <!-- Top Candle Array -->
+            <div class="altar-candles-row" id="altar-candles-row">
+              <!-- Animated candles rendered via JS -->
+            </div>
+
+            <!-- Tier 1: Pioneers of Computing -->
+            <div class="altar-tier">
+              <span class="tier-badge">🌸 TIER I: SOULS OF INNOVATION & ARCHITECTURE 🌸</span>
+              <div class="memorial-grid" id="memorials-grid">
+                <!-- Memorial cards dynamically rendered -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW 3: OFFLINE SÉANCE CHAMBER ==================== -->
+      <section class="view-section" id="view-seance">
+        <div class="seance-layout">
+
+          <!-- Spirit Selector Sidebar -->
+          <aside class="spirit-roster">
+            <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--marigold-gold); margin-bottom:4px; letter-spacing:0.08em;">
+              CHOOSE DEPARTED SPIRIT:
+            </div>
+            <div id="spirit-roster">
+              <!-- Rendered via JS -->
+            </div>
+          </aside>
+
+          <!-- Séance Dialogue Window -->
+          <div class="seance-dialogue-box">
+            <div class="seance-top">
+              <div class="current-spirit-info">
+                <div>
+                  <h3 style="font-family:var(--font-heading); font-size:1.1rem; color:#fff;" id="current-spirit-name">Ada Lovelace</h3>
+                  <div style="font-size:0.76rem; color:var(--spectral-cyan);" id="current-spirit-domain">Poetic Science & The Analytical Engine (1815–1852)</div>
+                </div>
+              </div>
+              <div class="spirit-status-pulse">
+                <span class="spirit-pulse-circle"></span>
+                <span>CHANNEL OPEN</span>
+              </div>
+            </div>
+
+            <!-- Dialogue Stream -->
+            <div class="seance-messages-stream" id="seance-messages-stream">
+              <!-- Bubbles rendered via JS -->
+            </div>
+
+            <!-- Message Input Form -->
+            <form class="seance-input-form" id="seance-input-form">
+              <input type="text" class="seance-text-field" id="seance-text-field" placeholder="Ask the spirit about open source, algorithms, or their era..." autocomplete="off">
+              <button type="submit" class="btn-spectral">Send Commune</button>
+            </form>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== VIEW 4: GHOST STORY WEAVER ==================== -->
+      <section class="view-section" id="view-story">
+        <div class="story-workspace">
+          
+          <!-- Sensor Logs Input Panel -->
+          <div class="sensor-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="font-family:var(--font-heading); color:#fff; font-size:1.15rem;">📡 Sensor Logs & System Anomaly Feed</h3>
+              <select id="story-preset-select" style="background:#090a0f; border:1px solid rgba(255,255,255,0.15); color:var(--marigold-gold); padding:5px 10px; border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:0.78rem;">
+                <option value="smarthome">Preset: Smart Home Incident (03:17 AM)</option>
+                <option value="gitrepo">Preset: The Dead Developer's Git Branch</option>
+                <option value="serverrack">Preset: Basement Server Rack Anomaly</option>
+                <option value="mirror">Preset: Possessed Smart Mirror</option>
+              </select>
+            </div>
+            
+            <p style="font-size:0.86rem; color:var(--text-secondary);">
+              Feed raw IoT sensors, door magnetic reeds, thermal drops, or git history anomalies. 
+              The local open AI weaves the breadcrumbs into chilling lore.
+            </p>
+
+            <textarea id="sensor-logs-input" class="sensor-log-box" spellcheck="false"></textarea>
+
+            <button class="btn-primary" id="btn-generate-story" style="width:100%; justify-content:center;">
+              ⚡ Weave Ghost Story via Open Weights
+            </button>
+          </div>
+
+          <!-- Story Output Panel -->
+          <div class="story-panel">
+            <h3 style="font-family:var(--font-heading); color:#fff; font-size:1.15rem;">📜 The Paranormal Chronicle</h3>
+            <div class="story-output-box" id="story-output-content">
+              <h3>The Tale Awaits</h3>
+              <p style="color:var(--text-muted); font-style:italic;">
+                Select a telemetry feed or paste your home's sensor logs on the left and click "Weave Ghost Story". 
+                The open-source AI engine will synthesize the nocturnal data into a chilling micro-tale.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== VIEW 5: WHY OPEN INNOVATION MATTERS ==================== -->
+      <section class="view-section" id="view-manifesto">
+        <div style="background:var(--bg-glass); backdrop-filter:blur(16px); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:36px; box-shadow:var(--shadow-elevation);">
+          
+          <div style="max-width:840px; margin:0 auto;">
+            <div class="hero-tag" style="margin-bottom:12px;">
+              <span>⚖️</span>
+              <span>DEV Community Hackathon Essay</span>
+            </div>
+            <h2 style="font-family:var(--font-display); font-size:2rem; color:#fff; margin-bottom:18px;">
+              Why Open Innovation Matters for What We Built
+            </h2>
+
+            <div style="font-size:1rem; color:var(--text-secondary); line-height:1.8; display:flex; flex-direction:column; gap:20px;">
+              <p>
+                When building something deeply human—whether it is honoring ancestors on Día de los Muertos, 
+                sharing personal grief, or resurrecting the memory of lost technology—<strong>who controls the AI matters as much as what the AI generates.</strong>
+              </p>
+
+              <div style="background:rgba(255, 140, 0, 0.08); border-left:3px solid var(--cempasuchil); padding:16px 20px; border-radius:0 var(--radius-md) var(--radius-md) 0;">
+                <h4 style="color:var(--marigold-gold); font-family:var(--font-heading); font-size:1.1rem; margin-bottom:6px;">1. Air-Gapped Privacy for Grief & Remembrance</h4>
+                <p>
+                  A virtual ofrenda holds intimate memories: a grandmother's favorite recipe, a mentor's final advice, 
+                  or childhood photographs. If powered by closed cloud APIs, every word of personal remembrance is logged, 
+                  ingested, and processed on remote corporate servers. By building with <strong>open-weight models that execute directly on user hardware</strong>, 
+                  your grief and family heritage stay strictly on your laptop. Even if you sever your internet connection, the ofrenda burns bright.
+                </p>
+              </div>
+
+              <div style="background:rgba(0, 245, 212, 0.08); border-left:3px solid var(--spectral-cyan); padding:16px 20px; border-radius:0 var(--radius-md) var(--radius-md) 0;">
+                <h4 style="color:var(--spectral-cyan); font-family:var(--font-heading); font-size:1.1rem; margin-bottom:6px;">2. Perpetual Existence vs. Corporate Sunset</h4>
+                <p>
+                  We learned this lesson when Adobe Flash was killed: millions of interactive creative artifacts, games, 
+                  and indie animations disappeared almost overnight because they depended on a proprietary ecosystem. 
+                  Closed AI services can be altered, censored, paywalled, or permanently deprecated on a CEO's whim. 
+                  Open-weight models (stored in standard GGUF and ONNX formats) can be booted 20, 50, or 100 years from now. 
+                  They guarantee that what you build today will not vanish tomorrow.
+                </p>
+              </div>
+
+              <div style="background:rgba(157, 78, 221, 0.08); border-left:3px solid var(--spirit-violet); padding:16px 20px; border-radius:0 var(--radius-md) var(--radius-md) 0;">
+                <h4 style="color:var(--spirit-violet); font-family:var(--font-heading); font-size:1.1rem; margin-bottom:6px;">3. Zero Marginal Cost & Offline Independence</h4>
+                <p>
+                  Halloween storms and power outages shouldn't stop creativity. This application has no token fees, 
+                  no monthly subscriptions, and no rate limits. It boots in a storm shelter on battery power with WiFi disabled. 
+                  Open-source AI transforms machine intelligence from an expensive metered utility into a sovereign personal tool.
+                </p>
+              </div>
+
+              <div style="display:flex; justify-content:center; margin-top:20px;">
+                <button class="btn-primary" id="btn-manifesto-open-dev">
+                  🚀 Generate & Export Complete DEV Submission Post
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer style="margin-top:60px; padding:24px 0 10px; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:0.8rem; color:var(--text-muted);">
+      <div>
+        <span>GHOST IN THE MACHINE</span> • Built with Open-Source AI for Halloween & Día de los Muertos
+      </div>
+      <div style="display:flex; gap:16px;">
+        <span style="color:var(--spectral-cyan)">• 100% Offline Capable</span>
+        <span style="color:var(--marigold-gold)">• Zero Data Harvesting</span>
+        <span style="color:var(--spirit-violet)">• Permissive Open Source</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Modal 1: Open-Source AI Engine Configuration -->
+  <div class="modal-backdrop" id="engine-modal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ Open-Source AI Engine Architecture</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div>
+          <label style="display:block; font-family:var(--font-mono); font-size:0.82rem; color:var(--marigold-gold); margin-bottom:8px;">
+            INFERENCE PROVIDER:
+          </label>
+          <select id="ai-engine-mode-select" style="width:100%; background:#090a0f; border:1px solid rgba(255,255,255,0.15); color:#fff; padding:10px 14px; border-radius:var(--radius-md); font-family:var(--font-mono); font-size:0.9rem;">
+            <option value="instant">1. Instant Spectral Neural (Zero setup, immediate offline generation)</option>
+            <option value="transformers_web">2. Transformers.js In-Browser (WebGPU / WASM Open Weights)</option>
+            <option value="ollama">3. Localhost Ollama Bridge (http://localhost:11434 - Llama 3.2, Mistral, Qwen)</option>
+          </select>
+        </div>
+
+        <div id="ollama-config-section" style="background:rgba(0,0,0,0.3); padding:16px; border-radius:var(--radius-md); border:1px dashed rgba(255,255,255,0.1);">
+          <label style="display:block; font-family:var(--font-mono); font-size:0.8rem; color:var(--spectral-cyan); margin-bottom:6px;">
+            OLLAMA REST ENDPOINT:
+          </label>
+          <div style="display:flex; gap:10px;">
+            <input type="text" id="ollama-endpoint-input" value="http://localhost:11434" style="flex:1; background:#090a0f; border:1px solid rgba(255,255,255,0.15); color:#fff; padding:8px 12px; border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:0.85rem;">
+            <button class="btn-spectral" id="btn-ping-ollama">Ping Localhost</button>
+          </div>
+          <div id="ollama-ping-result" style="margin-top:10px; font-family:var(--font-mono); font-size:0.78rem;"></div>
+        </div>
+
+        <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.5;">
+          <strong>Why this architecture?</strong> Modern open-source AI allows executing models either directly in client JavaScript via WebGPU or connecting to personal desktop runners like Ollama. We provide both, alongside an instant zero-latency spectral engine so the app works flawlessly out of the box on any device.
+        </div>
+
+        <div style="display:flex; justify-content:flex-end;">
+          <button class="btn-primary modal-close-btn">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Add Custom Memorial to Ofrenda -->
+  <div class="modal-backdrop" id="add-memorial-modal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">🕯️ Place a Loved One or Pioneer on the Altar</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="add-memorial-form" style="display:flex; flex-direction:column; gap:16px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div>
+            <label style="display:block; font-size:0.8rem; font-family:var(--font-mono); color:var(--marigold-gold); margin-bottom:6px;">NAME OF THE DEPARTED:</label>
+            <input type="text" id="mem-form-name" required placeholder="e.g. Abuelita Elena or Dennis Ritchie" style="width:100%; background:#090a0f; border:1px solid rgba(255,255,255,0.15); color:#fff; padding:10px; border-radius:var(--radius-sm); font-family:var(--font-body);">
+          </div>
+          <div>
+            <label style="display:block; font-size:0.8rem; font-family:var(--font-mono); color:var(--marigold-gold); margin-bottom:6px;">LIFESPAN YEARS (OPTIONAL):</label>
+            <input type="text" id="mem-form-years" placeholder="e.g. 1932 – 2018" style="width:100%; background:#090a0f; border:1px solid rgba(255,255,255,0.15); color:#fff; padding:10px; border-radius:var(--radius-sm); font-family:var(--font-body);">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 120px; gap:14px;">
+          <div>
+            <label style="display:block; font-size:0.8rem; font-family:var(--font-mono); color:var(--marigold-gold); margin-bottom:6px;">ROLE OR TITLE:</label>
+            <input type="text" id="mem-form-role" placeholder="e.g. Beloved Grandmother & Storyteller" style="width:100%; background:#090a0f; border:1px solid rgba(255,255,255,0.15); color:#fff; padding:10px; border-radius:var(--radius-sm); font-family:var(--font-body);">
+          </div>
+          <div>
+            <label style="display:block; font-size:0.8rem; font-family:var(--font-mono); color:var(--marigold-gold); margin-bottom:6px;">AVATAR / ICON:</label>
+            <input type="text" id="mem-form-avatar" value="🕯️" style="width:100%; background:#090a0f; border:1px solid rgba(255,255,255,0.15); color:#fff; padding:10px; border-radius:var(--radius-sm); text-align:center; font-size:1.2rem;">
+          </div>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:0.8rem; font-family:var(--font-mono); color:var(--marigold-gold); margin-bottom:6px;">REMEMBRANCE & EPITAPH:</label>
+          <textarea id="mem-form-epitaph" required rows="3" placeholder="Write a memory, lesson, or cherished story they left behind..." style="width:100%; background:#090a0f; border:1px solid rgba(255,255,255,0.15); color:#fff; padding:10px; border-radius:var(--radius-sm); font-family:var(--font-body);"></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+          <span style="font-size:0.75rem; color:var(--spectral-cyan);">🔒 Saved locally in your browser's private storage</span>
+          <button type="submit" class="btn-primary">Add to Altar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Spirit Remembrance Display -->
+  <div class="modal-backdrop" id="remembrance-modal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title" id="remembrance-modal-title">✨ Altar Remembrance</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div id="remembrance-modal-content">
+        <!-- Content injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: DEV Submission Post Generator -->
+  <div class="modal-backdrop" id="dev-post-modal">
+    <div class="modal-window" style="max-width:900px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🚀 Complete DEV Challenge Submission Post</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <p style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:14px;">
+        Formatted in standard GitHub Flavored Markdown with Mermaid architecture diagrams, ready to copy and stage to DEV.to!
+      </p>
+      <textarea id="dev-post-markdown" style="width:100%; height:380px; background:#07090e; border:1px solid rgba(0,245,212,0.3); color:#e2e8f0; font-family:var(--font-mono); font-size:0.82rem; padding:16px; border-radius:var(--radius-md); line-height:1.6;" spellcheck="false"></textarea>
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--marigold-gold);">TAGS: #devchallenge #opensource #ai #webdev</span>
+        <div style="display:flex; gap:10px;">
+          <button class="btn-secondary modal-close-btn">Close</button>
+          <button class="btn-primary" id="btn-copy-dev-post">📋 Copy Post Markdown</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/audio.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/ai-engine.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/ofrenda.js"></script>
+  <script src="js/seance.js"></script>
+  <script src="js/story.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

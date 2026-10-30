@@ -1,0 +1,353 @@
+/* ==========================================================================
+   DIGITAL OFRENDA & SPIRIT ALTAR - DÍA DE LOS MUERTOS STYLES
+   ========================================================================== */
+
+.ofrenda-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Altar Header & Marigold Garland */
+.altar-banner {
+  background: linear-gradient(135deg, rgba(30, 20, 10, 0.85) 0%, rgba(18, 14, 28, 0.85) 100%);
+  border: 1px solid rgba(255, 158, 0, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 25px rgba(255, 140, 0, 0.15);
+}
+
+.altar-banner::before {
+  content: "🌸 🌼 🌸 🌼 🌸 🌼 🌸 🌼 🌸 🌼 🌸 🌼 🌸 🌼 🌸 🌼 🌸 🌼 🌸 🌼 🌸";
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.85rem;
+  letter-spacing: 0.5em;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.altar-title-group h2 {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  color: #fff;
+  margin-bottom: 6px;
+  background: linear-gradient(90deg, #fff 0%, var(--marigold-gold) 70%, var(--cempasuchil) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.altar-title-group p {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+}
+
+.altar-stats-row {
+  display: flex;
+  gap: 16px;
+}
+
+.altar-stat-pill {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 158, 0, 0.25);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--marigold-gold);
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* 3-Tier Step Altar Structure */
+.altar-structure {
+  background: radial-gradient(ellipse at 50% 20%, rgba(35, 25, 15, 0.7) 0%, rgba(10, 11, 16, 0.95) 75%);
+  border: 1px solid rgba(255, 140, 0, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 0 100px rgba(255, 140, 0, 0.05);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Candle Array Row */
+.altar-candles-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 0 20px;
+  margin-bottom: -10px;
+}
+
+/* Animated Candles */
+.candle-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.candle-unit:hover {
+  transform: translateY(-4px);
+}
+
+.flame-halo {
+  position: relative;
+  width: 14px;
+  height: 24px;
+}
+
+.candle-flame {
+  width: 12px;
+  height: 22px;
+  background: linear-gradient(to top, #ff5400 0%, #ff9e00 60%, #fff 100%);
+  border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+  box-shadow: 0 0 16px rgba(255, 158, 0, 0.8), 0 0 30px rgba(255, 84, 0, 0.5);
+  animation: flicker 1.8s infinite ease-in-out alternate;
+  transform-origin: center bottom;
+}
+
+.candle-unit.extinguished .candle-flame {
+  display: none;
+}
+
+.candle-wick {
+  width: 2px;
+  height: 5px;
+  background: #222;
+  margin-top: -2px;
+}
+
+.candle-wax {
+  width: 20px;
+  height: 48px;
+  background: linear-gradient(90deg, #e0d0be 0%, #ffffff 50%, #d4c2af 100%);
+  border-radius: 3px 3px 6px 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+.candle-wax.tall { height: 68px; }
+.candle-wax.short { height: 34px; }
+.candle-wax.amber-wax {
+  background: linear-gradient(90deg, #d97706 0%, #fbbf24 50%, #b45309 100%);
+}
+
+/* Ofrenda Tiers */
+.altar-tier {
+  border-top: 2px solid rgba(255, 158, 0, 0.3);
+  padding-top: 24px;
+  position: relative;
+}
+
+.tier-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-tomb);
+  border: 1px solid var(--cempasuchil);
+  color: var(--marigold-gold);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 3px 14px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Grid of Memorial Portrait Frames */
+.memorial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 10px;
+}
+
+.memorial-card {
+  background: rgba(18, 22, 34, 0.8);
+  border: 1px solid rgba(255, 158, 0, 0.25);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  transition: all var(--transition-smooth);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.memorial-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--cempasuchil);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.7), 0 0 20px rgba(255, 140, 0, 0.2);
+}
+
+.memorial-header {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.memorial-portrait-frame {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-md);
+  padding: 3px;
+  background: linear-gradient(135deg, var(--cempasuchil), var(--marigold-gold));
+  box-shadow: 0 0 15px var(--cempasuchil-glow);
+  flex-shrink: 0;
+}
+
+.memorial-portrait-frame img,
+.memorial-avatar-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--radius-md) - 3px);
+  background: #090a0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+
+.memorial-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.memorial-name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.memorial-years {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--marigold-gold);
+}
+
+.memorial-epitaph {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  font-style: italic;
+  min-height: 48px;
+}
+
+/* Offerings Attached */
+.offerings-basket {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: rgba(0,0,0,0.3);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.offering-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.74rem;
+  background: rgba(255, 158, 0, 0.12);
+  color: var(--marigold-soft);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 158, 0, 0.2);
+}
+
+.memorial-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.btn-commune {
+  background: transparent;
+  border: 1px solid var(--cempasuchil);
+  color: var(--marigold-gold);
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-commune:hover {
+  background: var(--cempasuchil);
+  color: #fff;
+  box-shadow: 0 0 12px var(--cempasuchil-glow);
+}
+
+/* Remembrance Modal & AI Eulogy */
+.ai-blessing-box {
+  margin-top: 18px;
+  padding: 16px 20px;
+  background: rgba(157, 78, 221, 0.08);
+  border: 1px solid rgba(157, 78, 221, 0.35);
+  border-radius: var(--radius-md);
+  color: #e9d5ff;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  position: relative;
+  font-family: var(--font-body);
+}
+
+.ai-blessing-box::before {
+  content: "✨ SPIRIT REMEMBRANCE GENERATED BY OPEN-WEIGHT AI";
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--spirit-violet);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+@keyframes flicker {
+  0% { transform: scale(1) rotate(-1deg); opacity: 0.9; }
+  35% { transform: scale(1.08) rotate(1.5deg); opacity: 1; }
+  70% { transform: scale(0.96) rotate(-0.5deg); opacity: 0.85; }
+  100% { transform: scale(1.04) rotate(1deg); opacity: 0.95; }
+}
+
+@media (max-width: 768px) {
+  .altar-banner {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+}
